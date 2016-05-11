@@ -1,0 +1,24 @@
+//KeilSimulatorDebugMap_ATM32F4_01.ini wmh 2013-03-27 : v01 reduces mapped regions to just those used in Fig. 16 ==> Keil doesn't hang
+//KeilSimulatorDebugMap_ATM32F4_00.ini wmh 2013-03-27 : map needed by Keil simulator to permit simulated access to certain regions -- !!version 00 causes Keil to hang (possibly because it is trying to initialize all 4 gigs of address
+//	uses info from ST Cortex-M4F manual DM00037051.pdf Fig. 16
+//!!warning: map info below does _NOT_ model much of the detail //(reserved areas, effect of BOOT pins) which Fig. 16 describes, // _except_ for code relocation to 0x80000000 of STM32F4-DISCOVERY BOOT jumper default configuration  
+
+//MAP 0x00000000, 0x1FFFFFFF 	READ EXEC	// Block 0 -- Code
+MAP 0x00000000, 0x000FFFFF 	READ EXEC	// Block 0 -- Code
+
+//MAP 0x20000000, 0x3FFFFFFF READ WRITE	// Block 1 -- SRAM 
+MAP 0x20000000, 0x2001FFFF  READ WRITE EXEC // Block 1 -- SRAM 
+
+//MAP 0x40000000, 0x5FFFFFFF READ WRITE		// Block 2 -- Peripherals
+MAP 0x40000000, 0x40007FFF READ WRITE		// Block 2 -- APB1 Peripherals
+MAP 0x40010000, 0x400157FF READ WRITE		// Block 2 -- APB2 Peripherals
+MAP 0x40020000, 0x4007FFFF READ WRITE		// Block 2 -- AHB1 Peripherals
+MAP 0x50000000, 0x50060BFF READ WRITE		// Block 2 -- AHB2 Peripherals
+
+//MAP 0x60000000, 0x7FFFFFFF READ WRITE 	// Block 3 -- FSMC bank1 and bank2 
+MAP 0x80000000, 0x800FFFFF READ EXEC 		// Block 4 -- FSMC bank3 and bank4 with default BOOT jumper
+//MAP 0x80100000, 0x9FFFFFFF READ WRITE 	// Block 4 -- FSMC bank3 and bank4 
+//MAP 0xA0000000, 0xBFFFFFFF READ WRITE 	// Block 5 -- FSMC registers 
+//0xC0000000, 0xCFFFFFFF READ WRITE 		Block 6 -- Not used
+//MAP 0xE0000000, 0xFFFFFFFF READ WRITE 	// Block 7 -- Cortex-M4's internal peripherals 
+MAP 0xE0000000, 0xE00FFFFF READ WRITE 		// Block 7 -- Cortex-M4's internal peripherals 
